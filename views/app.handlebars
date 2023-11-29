@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>Simple chat app</title>
   <link rel="stylesheet" type="text/css" href="/assets/main.css">
   <script src="/socket.io/socket.io.js"></script>
   <script src="/assets/appBundle.js"></script>
 </head>
+
 <body>
   <section id="top">
   </section>
@@ -13,17 +15,18 @@
   <section id="content"> </section>
   <!-- Display the chat -->
   <section id="chat">
-    <p id="title-message">NON-PICTORAL CHAT</p>
+    <p id="title-message">NON-PICTORAL CHAT: {{chatRoom}}</p>
   </section>
   <!-- Send messages -->
   <section>
-  <h3>Send Message</h3>
+    <h3>Send Message</h3>
     <form id="messageForm" action="/sendMessage" method="post">
-      <label id="messageLabel"  for="message" class="user-name">Name: </label>
-      <input id="messageField" type="text" name="message" class="user-message"/>
+      <label id="messageLabel" for="message" class="user-name user-{{color}}">{{userName}}: </label>
+      <input id="messageField" type="text" name="message" class="user-message message-{{color}}" />
       <input type="submit" value="Send" />
     </form>
     <!-- <button type="button" id="getMessageBtn">Get Messages</button> -->
   </section>
 </body>
+
 </html>

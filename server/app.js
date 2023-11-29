@@ -37,10 +37,10 @@ redisClient.connect().then(() => {
   app.use(
     helmet.contentSecurityPolicy({
       directives: {
-        "script-src": ["'self'"],
-        "style-src": null,
+        'script-src': ["'self'"],
+        'style-src': null,
       },
-    })
+    }),
   );
   app.use('/assets', express.static(path.resolve(`${__dirname}/../hosted/`)));
   app.use(favicon(`${__dirname}/../hosted/img/favicon.png`));

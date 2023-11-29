@@ -173,7 +173,7 @@ const initMessageBox = () => {
          sending simple text messages to the 'chat message'
          event channel, since the server will handle the
          messaging channel for us.
-      */ 
+      */
       socket.emit('chat message', {
         message: editBox.value,
         color: sessionStorage.getItem('color'),
@@ -197,17 +197,20 @@ const initChannelSelect = async () => {
   // });
 }
 
-const displayMessage = (msg) => {
+const Message = (props) => {
+  const userClassList = `user-name user-${props.msg.color}`;
+  const messageClassList = `user-message message-${props.msg.color}`;
+  return (
+    <div className="chat-message">
+      <p className={userClassList}>{props.msg.userName}:</p>
+      <p className={messageClassList}>{props.msg.message}</p>
+    </div>
+  );
+}
+
+const displayMessage = (msgData) => {
   const messageDiv = document.createElement('div');
-  messageDiv.classList.add('chat-message');
-  const nameP = document.createElement('p');
-  nameP.classList.add('user-name', `user-${msg.color}`);
-  nameP.innerHTML = msg.userName;
-  messageDiv.appendChild(nameP);
-  const messageP = document.createElement('p');
-  messageP.classList.add('user-message', `message-${msg.color}`);
-  messageP.innerHTML = msg.message;
-  messageDiv.appendChild(messageP);
+  ReactDOM.render(<Message msg={msgData} />, messageDiv);
   document.querySelector('#chat').appendChild(messageDiv);
 }
 

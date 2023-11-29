@@ -1,14 +1,18 @@
-//const { contentSecurityPolicy } = require('helmet');
-//const models = require('../models');
+// const { contentSecurityPolicy } = require('helmet');
+// const models = require('../models');
 
 // Server Storage
-//const users = {};
+// const users = {};
 const messages = {};
 const requests = {}; // For Long-Polling
-let requestsLength = 0;
+const requestsLength = 0;
 let lastRequest = 0;
 
-const chatPage = async (req, res) => res.render('app');
+const chatPage = async (req, res) => res.render('app', {
+    userName: req.session.account.username,
+    color: req.session.account.color,
+    chatRoom: 'General',
+});
 
 const getMessages = (req, res) => {
     const requestTime = Date.now();
@@ -21,7 +25,7 @@ const getMessages = (req, res) => {
     });
     // If no messages to send, send success
     if (Object.keys(messagesToSend).length === 0) {
-        return res.status(200).json({time: requestTime});
+        return res.status(200).json({ time: requestTime });
     }
     const responseJSON = { messages: messagesToSend, time: requestTime };
     return res.status(200).json(responseJSON);
@@ -31,15 +35,15 @@ const getMessages = (req, res) => {
 // Handles all long poll requests for messages
 const handleStoredRequests = () => {
     for (let index = lastRequest; index < requestsLength; index++) {
-      getMessages(
-        requests[index].request,
-        requests[index].response,
-        requests[index].params,
-        requests[index].head,
-      );
+        getMessages(
+            requests[index].request,
+            requests[index].response,
+            requests[index].params,
+            requests[index].head,
+        );
     }
     lastRequest = requestsLength;
-  };
+};
 
 // function to add a message from a POST body
 const sendMessage = (req, res) => {
@@ -75,10 +79,8 @@ const sendMessage = (req, res) => {
     return res.status(201).json(responseJSON);
 };
 
-
-
 module.exports = {
     chatPage,
     sendMessage,
-    getMessages
+    getMessages,
 };

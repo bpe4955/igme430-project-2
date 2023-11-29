@@ -12,7 +12,7 @@ const router = (app) => {
   app.get('/chat', mid.requiresLogin, controllers.Chat.chatPage);
   app.post('/sendMessage', mid.requiresLogin, controllers.Chat.sendMessage);
   app.get('/getMessages', mid.requiresLogin, controllers.Chat.getMessages);
-  
+
   app.get('/getUserColor', controllers.Account.getUserColor);
   app.get('/getUserName', controllers.Account.getUsername);
   app.get('/getUserId', controllers.Account.getUserId);

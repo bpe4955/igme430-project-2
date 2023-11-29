@@ -35,7 +35,7 @@ const AccountSchema = new mongoose.Schema({
   },
   color: {
     type: String,
-    default: "black",
+    default: 'black',
   },
   createdDate: {
     type: Date,
@@ -47,7 +47,7 @@ const AccountSchema = new mongoose.Schema({
 AccountSchema.statics.toAPI = (doc) => ({
   username: doc.username,
   _id: doc._id,
-  color: doc.color
+  color: doc.color,
 });
 
 // Helper function to hash a password
