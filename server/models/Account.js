@@ -48,6 +48,7 @@ AccountSchema.statics.toAPI = (doc) => ({
   username: doc.username,
   _id: doc._id,
   color: doc.color,
+  createdDate: doc.createdDate,
 });
 
 // Helper function to hash a password
