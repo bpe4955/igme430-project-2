@@ -59,7 +59,7 @@ const initMessageBox = () => {
         color: sessionStorage.getItem('color'),
         userName: sessionStorage.getItem('userName'),
         userId: sessionStorage.getItem('_id'),
-        room: "General"
+        room: sessionStorage.getItem('room'),
      }
      await sendMessagePost(msg);
       socket.emit('chat message', msg);
@@ -71,13 +71,17 @@ const initMessageBox = () => {
 };
 
 const initChannelSelect = async () => {
-  //const channelSelect = document.getElementById('channelSelect');
-  const messages = document.getElementById('content');
+  const channelSelect = document.getElementById('channelSelect');
+  const messages = document.getElementById('chat');
 
-  // await channelSelect.addEventListener('change', () => {
-  //   messages.innerHTML = '';
-  //   socket.emit('room change', channelSelect.value);
-  // });
+  channelSelect.addEventListener('change', () => {
+    sessionStorage.setItem('room',channelSelect.value);
+    messages.innerHTML = `<p id="title-message">NON-PICTORAL CHAT: ${channelSelect.value[0].toUpperCase() + channelSelect.value.substring(1)}</p>`;
+    socket.emit('room change', channelSelect.value);
+    requestInitialMessages();
+  });
+
+  channelSelect.value = sessionStorage.getItem('room');
 }
 
 const Message = (props) => {
@@ -98,7 +102,7 @@ const displayMessage = (msgData) => {
 }
 
 const requestInitialMessages = async () => {
-  const response = await fetch('/getMessages');
+  const response = await fetch(`/getMessages?room=${sessionStorage.getItem('room')}`);
   const data = await response.json();
   data.messages.forEach(msg => {
     displayMessage(msg);
@@ -108,6 +112,7 @@ const requestInitialMessages = async () => {
 // Init function is called when window.onload runs (set below).
 // Set up connections and events
 const init = () => {
+  if(!sessionStorage.getItem('room')) {sessionStorage.setItem('room', 'general');}
   // Get past messages
   requestInitialMessages();
 
@@ -119,6 +124,7 @@ const init = () => {
   initMessageBox();
   initChannelSelect();
   socket.on('chat message', displayMessage);
+  document.querySelector('#title-message').textContent = `NON-PICTORAL CHAT: ${channelSelect.value[0].toUpperCase() + channelSelect.value.substring(1)}`;
 };
 
 //When the window loads, run init.
