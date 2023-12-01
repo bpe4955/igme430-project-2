@@ -4,8 +4,6 @@ const models = require('../models');
 
 const { Chat } = models;
 
-// Server Storage
-
 const chatPage = async (req, res) => res.render('app', {
   userName: req.session.account.username,
   color: req.session.account.color,
@@ -14,8 +12,9 @@ const chatPage = async (req, res) => res.render('app', {
 
 const getMessages = async (req, res) => {
   try {
-    const query = { room: req.query.room };
-    const docs = await Chat.find(query).sort('-date').limit(25).lean()
+    const query = { room: req.query.room
+      /*, createdDate: { $gts: req.session.account.createdDate, }*/ };
+    const docs = await Chat.find(query).sort({'createdDate': -1}).limit(25).lean()
       .exec();
     // .select('user message color');
     return res.json({ messages: docs });

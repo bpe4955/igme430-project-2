@@ -52,6 +52,7 @@ const initMessageBox = () => {
   // Submit message
   editForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    socket.emit('current rooms');
 
     if (editBox.value) {
      const msg = {
@@ -104,9 +105,15 @@ const displayMessage = (msgData) => {
 const requestInitialMessages = async () => {
   const response = await fetch(`/getMessages?room=${sessionStorage.getItem('room')}`);
   const data = await response.json();
-  data.messages.forEach(msg => {
+  data.messages.slice().reverse().forEach(msg => {
     displayMessage(msg);
   });
+}
+
+const getRoom = ({rooms, id}) => {
+  console.log("Getting room from socket");
+  console.log(rooms);
+  room = rooms.filter(e => {e !== id;});
 }
 
 // Init function is called when window.onload runs (set below).
@@ -124,6 +131,7 @@ const init = () => {
   initMessageBox();
   initChannelSelect();
   socket.on('chat message', displayMessage);
+  socket.on('current rooms', getRoom)
   document.querySelector('#title-message').textContent = `NON-PICTORAL CHAT: ${channelSelect.value[0].toUpperCase() + channelSelect.value.substring(1)}`;
 };
 

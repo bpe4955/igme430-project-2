@@ -9,7 +9,6 @@ body {
   text-align: center;
   margin: 0.5rem auto 0;
 }
-
 #top h3 {
   font-size: 1.5em;
   margin: 0.5rem 0;
@@ -115,12 +114,8 @@ body {
 }
 
 /* Area to send messages */
-#chatbox {
-  margin: 0 auto;
-  text-align: center;
-}
-
-#chatbox, #top {
+#chatbox,
+#top {
   background-color: gainsboro;
   border: 2px solid rgb(88, 88, 88);
   border-radius: 5px;
@@ -128,6 +123,10 @@ body {
   padding: 0.5rem;
 }
 
+#chatbox {
+  margin: 0 auto;
+  text-align: center;
+}
 #chatbox h3 {
   margin: 0.5rem 0;
 }
