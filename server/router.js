@@ -20,6 +20,7 @@ const router = (app) => {
   app.get('/settings', mid.requiresLogin, controllers.Account.settingsPage);
 
   app.post('/changePass', mid.requiresLogin, controllers.Account.changePass);
+  app.post('/changeColor', mid.requiresLogin, controllers.Account.changeColor);
 
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
 };

@@ -77,6 +77,23 @@ const changePass = async (req, res) => {
   });
 };
 
+const changeColor = async (req, res) => {
+  // Error Checking
+  if (!req.body.color) { return res.status(400).json({ error: 'Color is required!' }); }
+
+    // pdating user
+    try {
+      await Account.updateOne({ _id: req.session.account._id }, { color: req.body.color });
+      // Successfully updated Password
+      req.session.account.color = req.body.color;
+      return res.status(200).json({ message: 'Color Updated!' });
+    } catch (error) {
+      console.log(error);
+      // Server Error
+      return res.status(500).json({ error: 'An error occured!' });
+    }
+};
+
 const getUserColor = (req, res) => {
   if (!req.session) { return res.status(500).json({ message: 'No session data' }); }
   return res.json({ color: req.session.account.color });
@@ -99,6 +116,7 @@ module.exports = {
   login,
   signup,
   changePass,
+  changeColor,
   getUserColor,
   getUsername,
   getUserId,

@@ -30,7 +30,7 @@ const handlePassChange = (e) => {
 
 
 
-// Functional stateless component for SignupWindow
+// Functional stateless component for ChangePassWindow
 const ChangePassWindow = (props) => {
     return (
         <div class='mainForm'>
@@ -49,14 +49,50 @@ const ChangePassWindow = (props) => {
     );
 };
 
+const handleColorChange = (e) => {
+    e.preventDefault();
+
+    const colorField = document.querySelector("#colorField");
+
+    helper.sendPost(e.target.action, { color: colorField.value, }, result => {
+        if(result.message) {
+            sessionStorage.color = colorField.value;
+        }
+    });
+
+    return false;
+};
+
+// Functional stateless component for SignupWindow
+const ChangeColorWindow = (props) => {
+    return (
+        <div class='mainForm'>
+            <h3>Change&nbsp;Color</h3>
+            <form action='/changeColor' onSubmit={handleColorChange} method='POST'
+                name='changeColorForm' id='changeColorForm'>
+                <label for="color">Color: </label>
+                <select id='colorField' name="color">
+                    <option value='black'>Black</option>
+                    <option value='blue'>Blue</option>
+                    <option value='red'>Red</option>
+                </select>
+                <input type="submit" value="Set Color" />
+            </form>
+        </div>
+    );
+};
+
 const init = () => {
     const loginButton = document.querySelector('#loginButton');
     const signupButton = document.querySelector('#signupButton');
 
-    console.log('running settings.jsx');
+    const passDiv = document.createElement('div');
+    ReactDOM.render(<ChangePassWindow />, passDiv);
+    document.querySelector('#content').appendChild(passDiv);
 
-    ReactDOM.render(<ChangePassWindow />,
-            document.querySelector('#content'));
+    const colorDiv = document.createElement('div');
+    ReactDOM.render(<ChangeColorWindow />, colorDiv);
+    document.querySelector('#content').appendChild(colorDiv);
 
 };
 
