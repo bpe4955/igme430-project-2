@@ -1,6 +1,7 @@
 const helper = require('./helper.js');
 const React = require('react');
 const ReactDOM = require('react-dom');
+const {useState, useEffect} = React;
 
 
 const handlePassChange = (e) => {
@@ -65,6 +66,23 @@ const handleColorChange = (e) => {
 
 // Functional stateless component for SignupWindow
 const ChangeColorWindow = (props) => {
+    const [colors, setColor] = useState(props.colors);
+
+    // const colorList = props.colors.map((color) => {
+    //     if(color.selected){
+    //         return(
+    //             <div key={color.color}>
+    //                 <option value={color.color} selected>{color.color}</option>
+    //             </div> 
+    //         );
+    //     }
+    //     return(
+    //         <div key={color.color}>
+    //             <option value={color.color}>{color.color}</option>
+    //         </div> 
+    //     );
+    // });
+
     return (
         <div class='mainForm'>
             <h3>Change&nbsp;Color</h3>
@@ -72,9 +90,10 @@ const ChangeColorWindow = (props) => {
                 name='changeColorForm' id='changeColorForm'>
                 <label for="color">Color: </label>
                 <select id='colorField' name="color">
-                    <option value='black'>Black</option>
-                    <option value='blue'>Blue</option>
-                    <option value='red'>Red</option>
+                    {/* {colorList} */}
+                    <option value="black">black</option>
+                    <option value="blue">blue</option>
+                    <option value="red">red</option>
                 </select>
                 <input type="submit" value="Set Color" />
             </form>
