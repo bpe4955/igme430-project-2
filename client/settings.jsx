@@ -1,7 +1,7 @@
 const helper = require('./helper.js');
 const React = require('react');
 const ReactDOM = require('react-dom');
-const {useState, useEffect} = React;
+const { useState, useEffect } = React;
 
 
 const handlePassChange = (e) => {
@@ -21,7 +21,7 @@ const handlePassChange = (e) => {
     }
 
     helper.sendPost(e.target.action, { oldPass, pass, pass2 }, result => {
-        if(result.message){
+        if (result.message) {
             document.querySelector("#changePassForm").reset();
         }
     });
@@ -36,16 +36,21 @@ const ChangePassWindow = (props) => {
     return (
         <div class='mainForm'>
             <h3>Change&nbsp;Password</h3>
-        <form action='/changePass' onSubmit={handlePassChange} method='POST'
-            name='changePassForm' id='changePassForm'>
-            <label htmlFor='currentpass'>Old&nbsp;Pass: </label>
-            <input id='oldpass' type='text' name='currentpass' placeholder='Current Pass' />
-            <label htmlFor='pass'>Password: </label>
-            <input id='pass' type='text' name='pass' placeholder='password' />
-            <label htmlFor='pass2'>Password: </label>
-            <input id='pass2' type='text' name='pass2' placeholder='retype password' />
-            <input type='submit' className='formSubmit' value='Change' />
-        </form>
+            <form action='/changePass' onSubmit={handlePassChange} method='POST'
+                name='changePassForm' id='changePassForm'>
+                <div><label htmlFor='currentpass'>Old&nbsp;Pass: </label>
+                    <input id='oldpass' type='text' name='currentpass' placeholder='Current Pass' />
+                </div>
+                <div>
+                    <label htmlFor='pass'>Password: </label>
+                    <input id='pass' type='text' name='pass' placeholder='password' />
+                </div>
+                <div>
+                    <label htmlFor='pass2'>Password: </label>
+                    <input id='pass2' type='text' name='pass2' placeholder='retype password' />
+                </div>
+                <input type='submit' className='formSubmit' value='Change' />
+            </form>
         </div>
     );
 };
@@ -56,7 +61,7 @@ const handleColorChange = (e) => {
     const colorField = document.querySelector("#colorField");
 
     helper.sendPost(e.target.action, { color: colorField.value, }, result => {
-        if(result.message) {
+        if (result.message) {
             sessionStorage.color = colorField.value;
         }
     });
@@ -88,13 +93,15 @@ const ChangeColorWindow = (props) => {
             <h3>Change&nbsp;Color</h3>
             <form action='/changeColor' onSubmit={handleColorChange} method='POST'
                 name='changeColorForm' id='changeColorForm'>
-                <label for="color">Color: </label>
-                <select id='colorField' name="color">
-                    {/* {colorList} */}
-                    <option value="black">black</option>
-                    <option value="blue">blue</option>
-                    <option value="red">red</option>
-                </select>
+                <div>
+                    <label for="color">Color: </label>
+                    <select id='colorField' name="color">
+                        {/* {colorList} */}
+                        <option value="black">black</option>
+                        <option value="blue">blue</option>
+                        <option value="red">red</option>
+                    </select>
+                </div>
                 <input type="submit" value="Set Color" />
             </form>
         </div>

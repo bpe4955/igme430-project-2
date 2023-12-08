@@ -1,3 +1,11 @@
+$contrastColor: rgb(88, 88, 88);
+$contrastColorTrans: #888c;
+$mainColor: #dcdcdc;
+$mainColorTrans: #dcdcdc33;
+
+$navHeight: 50px;
+
+
 body {
   height: 100vh;
   width: 100%;
@@ -9,30 +17,89 @@ body {
   text-align: center;
   margin: 0.5rem auto 0;
 
-  h3 {
-    font-size: 1.5em;
-    margin: 0.5rem 0;
+  a, a:link, a:visited, a:hover, a:active{
+    font-size: 1.25rem;
+    display: block;
+    padding: 3px;
+    border: 0px solid $mainColor;
+    border-radius: 5px;
+    color:$contrastColor;
+    transition: background-color 0.5s ease, color 0.5s ease ;
+  }
+  a:hover{
+    background-color: $contrastColorTrans;
+    color: $mainColor;
   }
 }
+// Dropdown Styling
+// https://www.sliderrevolution.com/resources/css-select-styles/
+// Designed by: Veiko
+select {
 
-#content {
-  visibility: hidden;
-  font-size: 1.20em;
-  text-align: center;
-  position: absolute;
-  right: 30px;
-  bottom: 0px;
+  /* styling */
+  background-color: white;
+  color: $contrastColor;
+  border: thin solid $contrastColor;
+  border-radius: 4px;
+  display: inline-block;
+  font: inherit;
+  line-height: 1.5em;
+  padding: 0.5em 3.5em 0.5em 1em;
+
+  /* reset */
+
+  margin: 0;      
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  /* Triangle */
+  background-image:
+    linear-gradient(45deg, transparent 50%, $contrastColor 50%),
+    linear-gradient(135deg, $contrastColor 50%, transparent 50%),
+    linear-gradient(to right, #ccc, #ccc);
+  background-position:
+    calc(100% - 20px) calc(1em + 2px),
+    calc(100% - 15px) calc(1em + 2px),
+    calc(100% - 2.5em) 0.5em;
+  background-size:
+    5px 5px,
+    5px 5px,
+    1px 1.5em;
+  background-repeat: no-repeat;
+  color: $contrastColor;
 }
+select:focus {
+  background-image:
+    linear-gradient(45deg, $contrastColor 50%, transparent 50%),
+    linear-gradient(135deg, transparent 50%, $contrastColor 50%),
+    linear-gradient(to right, #ccc, #ccc);
+  background-position:
+    calc(100% - 15px) 1em,
+    calc(100% - 20px) 1em,
+    calc(100% - 2.5em) 0.5em;
+  background-size:
+    5px 5px,
+    5px 5px,
+    1px 1.5em;
+  background-repeat: no-repeat;
+  border-color: $contrastColor;
+  outline: 0;
+}
+
+
 
 /* Area that displays messages */
 #chat {
   padding-top: 0.2rem;
-  background-color: gainsboro;
+  background-color: $mainColor;
   width: 90%;
   height: 70%;
   margin: 2rem auto;
   overflow-y: auto;
-  border: 2px solid gainsboro;
+  border: 2px solid $mainColor;
 }
 
 #title-message {
@@ -42,10 +109,10 @@ body {
   margin-bottom: 2px;
   padding-top: 0.1rem;
   padding-left: 0.5rem;
-  border: 2px solid gainsboro;
+  border: 2px solid $mainColor;
   border-radius: 5px;
-  background-color: rgb(88, 88, 88);
-  color: gainsboro;
+  background-color: $contrastColor;
+  color: $mainColor;
 }
 
 /* Contains the user-name and user-message */
@@ -118,8 +185,8 @@ body {
 
 #chatbox,
 #top {
-  background-color: gainsboro;
-  border: 2px solid rgb(88, 88, 88);
+  background-color: $mainColor;
+  border: 2px solid $contrastColor;
   border-radius: 5px;
   width: fit-content;
   padding: 0.5rem;
@@ -144,4 +211,91 @@ body {
 
 #messageField:focus-visible {
   outline: 2px;
+}
+
+//
+// Account Styling
+//
+
+nav {
+  width: 100%;
+  height: $navHeight;
+  background-color: $contrastColor;
+  padding: 0.2rem 2rem;
+}
+
+.navlink{
+  color:$mainColor;
+  font-size: 1.5rem;
+  float: left;
+  margin: 0 0.5rem;
+  height: 100%;
+
+  a, a:link, a:visited, a:hover, a:active{
+    line-height: calc($navHeight - 3px);
+    padding: 3px;
+    border: 0px solid $mainColor;
+    border-radius: 5px;
+    color:$mainColor;
+    text-decoration: none;
+    transition: background-color 0.5s ease;
+  }
+  a:hover{
+    background-color: $mainColorTrans;
+  }
+}
+
+
+.mainForm{
+  width: fit-content;
+  margin: 3rem auto;
+  padding: 1rem;
+  text-align: center;
+  background-color: $mainColor;
+  color: $contrastColor;
+
+  div{
+    margin: 0 auto;
+    text-align: center;
+    margin: 5px 0;
+  }
+  label{
+    display: inline-block;
+    width: fit-content;
+    margin-right: 10px;
+    text-align: right;
+  }
+  .formSubmit{
+    transition: background-color 0.4s ease;
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 14px;
+    font-size: 1.2em;
+    width: 100px;
+
+    background-color: $contrastColor;
+    border-color: $contrastColorTrans;
+    color: $mainColor;
+
+    border-radius: 5px;
+    border-bottom-left-radius: 0px;
+    padding: 3px 0px;
+    
+    text-decoration: none;
+  }
+
+  .formSubmit:hover{
+    background-color: $contrastColorTrans;
+    color: $mainColor;
+  }
+}
+#user, #pass, #pass2, #oldpass {
+  text-align: center;
+  font-size: 1.1em;
+  width: 180px;
+  border-radius: 6px;
+}
+input{
+  text-align: center;
 }
