@@ -65,6 +65,10 @@ const handleRoomChange = (socket, roomName) => {
   socket.join(roomName);
 };
 
+const getCurrentRooms = (socket) => {
+  io.to(socket.id).emit('current room', socket.request.session.account.room);
+}
+
 const socketSetup = (app, sessionMiddleware) => {
   const server = http.createServer(app);
   io = new Server(server);
@@ -88,6 +92,7 @@ const socketSetup = (app, sessionMiddleware) => {
         */
     socket.on('chat message', (msg) => handleChatMessage(socket, msg));
     socket.on('room change', (room) => handleRoomChange(socket, room));
+    socket.on('current room', () => getCurrentRooms(socket));
   });
 
   return server;

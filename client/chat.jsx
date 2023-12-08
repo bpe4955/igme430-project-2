@@ -22,37 +22,16 @@ const sendMessagePost = async (msg) => {
     body: JSON.stringify(msg),
   });
   const data = await response.json();
-
-
-  //Once we have a response, handle it.
-  //handleResponse(response);
-
 };
 
+// Init the field used to type and send messages
 const initMessageBox = () => {
   const editForm = document.querySelector('#messageForm');
   const editBox = document.querySelector('#messageField');
 
-  if (!sessionStorage.getItem('color')) {
-    helper.sendGet('/getUserColor', (result) => {
-      sessionStorage.setItem('color', result.color);
-    });
-  }
-  if (!sessionStorage.getItem('_id')) {
-    helper.sendGet('/getUserId', (result) => {
-      sessionStorage.setItem('_id', result._id);
-    });
-  }
-  if (!sessionStorage.getItem('userName')) {
-    helper.sendGet('/getUserName', (result) => {
-      sessionStorage.setItem('userName', result.username);
-    });
-  }
-
   // Submit message
   editForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    socket.emit('current rooms');
 
     if (editBox.value) {
      const msg = {
@@ -67,18 +46,27 @@ const initMessageBox = () => {
   });
 };
 
+// Get the user's room from the session data
+const getRoom = (room) => {
+  document.getElementById('channelSelect').value = room;
+  const title = document.getElementById('title-message');
+  title.textContent = `NON-PICTORAL CHAT: ${channelSelect.value[0].toUpperCase() + channelSelect.value.substring(1)}`;
+}
+
+// Init the Channel Select dropdown events
 const initChannelSelect = async () => {
   const channelSelect = document.getElementById('channelSelect');
   const messages = document.getElementById('chat');
+  socket.emit('current room');
 
   channelSelect.addEventListener('change', () => {
     messages.innerHTML = `<p id="title-message">NON-PICTORAL CHAT: ${channelSelect.value[0].toUpperCase() + channelSelect.value.substring(1)}</p>`;
     socket.emit('room change', channelSelect.value);
     helper.sendPost('changeRoom', {room: channelSelect.value}, requestInitialMessages);
   });
-
 }
 
+// Functional stateless component for Message
 const Message = (props) => {
   const userClassList = `user-name user-${props.msg.color}`;
   const messageClassList = `user-message message-${props.msg.color}`;
@@ -104,11 +92,7 @@ const requestInitialMessages = async () => {
   });
 }
 
-const getRoom = ({rooms, id}) => {
-  console.log("Getting room from socket");
-  console.log(rooms);
-  room = rooms.filter(e => {e !== id;});
-}
+
 
 // Init function is called when window.onload runs (set below).
 // Set up connections and events
@@ -124,7 +108,7 @@ const init = () => {
   initMessageBox();
   initChannelSelect();
   socket.on('chat message', displayMessage);
-  socket.on('current rooms', getRoom)
+  socket.on('current room', getRoom)
   document.querySelector('#title-message').textContent = `NON-PICTORAL CHAT: ${channelSelect.value[0].toUpperCase() + channelSelect.value.substring(1)}`;
 };
 
