@@ -57,10 +57,6 @@ const initMessageBox = () => {
     if (editBox.value) {
      const msg = {
         message: editBox.value,
-        color: sessionStorage.getItem('color'),
-        userName: sessionStorage.getItem('userName'),
-        userId: sessionStorage.getItem('_id'),
-        room: sessionStorage.getItem('room'),
      }
      await sendMessagePost(msg);
       socket.emit('chat message', msg);
@@ -76,13 +72,11 @@ const initChannelSelect = async () => {
   const messages = document.getElementById('chat');
 
   channelSelect.addEventListener('change', () => {
-    sessionStorage.setItem('room',channelSelect.value);
     messages.innerHTML = `<p id="title-message">NON-PICTORAL CHAT: ${channelSelect.value[0].toUpperCase() + channelSelect.value.substring(1)}</p>`;
     socket.emit('room change', channelSelect.value);
-    requestInitialMessages();
+    helper.sendPost('changeRoom', {room: channelSelect.value}, requestInitialMessages);
   });
 
-  channelSelect.value = sessionStorage.getItem('room');
 }
 
 const Message = (props) => {
@@ -103,7 +97,7 @@ const displayMessage = (msgData) => {
 }
 
 const requestInitialMessages = async () => {
-  const response = await fetch(`/getMessages?room=${sessionStorage.getItem('room')}`);
+  const response = await fetch(`/getMessages`);
   const data = await response.json();
   data.messages.slice().reverse().forEach(msg => {
     displayMessage(msg);
@@ -119,7 +113,6 @@ const getRoom = ({rooms, id}) => {
 // Init function is called when window.onload runs (set below).
 // Set up connections and events
 const init = () => {
-  if(!sessionStorage.getItem('room')) {sessionStorage.setItem('room', 'general');}
   // Get past messages
   requestInitialMessages();
 

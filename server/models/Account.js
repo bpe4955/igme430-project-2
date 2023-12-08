@@ -37,6 +37,10 @@ const AccountSchema = new mongoose.Schema({
     type: String,
     default: 'black',
   },
+  room: {
+    type: String,
+    default: 'general',
+  },
   createdDate: {
     type: Date,
     default: Date.now,
@@ -48,6 +52,7 @@ AccountSchema.statics.toAPI = (doc) => ({
   username: doc.username,
   _id: doc._id,
   color: doc.color,
+  room: doc.room,
   createdDate: doc.createdDate,
 });
 

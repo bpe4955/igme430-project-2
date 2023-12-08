@@ -12,9 +12,10 @@ const chatPage = async (req, res) => res.render('app', {
 
 const getMessages = async (req, res) => {
   try {
-    const query = { room: req.query.room
-      /*, createdDate: { $gts: req.session.account.createdDate, }*/ };
-    const docs = await Chat.find(query).sort({'createdDate': -1}).limit(25).lean()
+    const query = {
+      room: req.session.account.room,
+      /* , createdDate: { $gts: req.session.account.createdDate, } */ };
+    const docs = await Chat.find(query).sort({ createdDate: -1 }).limit(25).lean()
       .exec();
     // .select('user message color');
     return res.json({ messages: docs });
@@ -48,7 +49,7 @@ const sendMessage = async (req, res) => {
     userName: String(req.session.account.username),
     userId: req.session.account._id,
     color: req.session.account.color,
-    room: req.body.room,
+    room: req.session.account.room,
     message: req.body.message,
   };
   const chat = new Chat(msg);

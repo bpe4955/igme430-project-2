@@ -81,17 +81,34 @@ const changeColor = async (req, res) => {
   // Error Checking
   if (!req.body.color) { return res.status(400).json({ error: 'Color is required!' }); }
 
-    // pdating user
-    try {
-      await Account.updateOne({ _id: req.session.account._id }, { color: req.body.color });
-      // Successfully updated Password
-      req.session.account.color = req.body.color;
-      return res.status(200).json({ message: 'Color Updated!' });
-    } catch (error) {
-      console.log(error);
-      // Server Error
-      return res.status(500).json({ error: 'An error occured!' });
-    }
+  // pdating user
+  try {
+    await Account.updateOne({ _id: req.session.account._id }, { color: req.body.color });
+    // Successfully updated Password
+    req.session.account.color = req.body.color;
+    return res.status(200).json({ message: 'Color Updated!' });
+  } catch (error) {
+    console.log(error);
+    // Server Error
+    return res.status(500).json({ error: 'An error occured!' });
+  }
+};
+
+const changeRoom = async (req, res) => {
+  // Error Checking
+  if (!req.body.room) { return res.status(400).json({ error: 'Color is required!' }); }
+
+  // pdating user
+  try {
+    await Account.updateOne({ _id: req.session.account._id }, { room: req.body.room });
+    // Successfully updated Password
+    req.session.account.room = req.body.room;
+    return res.status(200).json({ message: 'room Updated!' });
+  } catch (error) {
+    console.log(error);
+    // Server Error
+    return res.status(500).json({ error: 'An error occured!' });
+  }
 };
 
 const getUserColor = (req, res) => {
@@ -117,6 +134,7 @@ module.exports = {
   signup,
   changePass,
   changeColor,
+  changeRoom,
   getUserColor,
   getUsername,
   getUserId,

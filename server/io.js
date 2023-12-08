@@ -41,8 +41,11 @@ const handleChatMessage = (socket, msg) => {
            room, so we will skip over it.
         */
     if (room === socket.id) return;
-
-    io.to(room).emit('chat message', msg);
+    io.to(room).emit('chat message', {
+      color: socket.request.session.account.color,
+      userName: socket.request.session.account.username,
+      message: msg.message,
+    });
   });
 };
 
@@ -62,9 +65,10 @@ const handleRoomChange = (socket, roomName) => {
   socket.join(roomName);
 };
 
-const socketSetup = (app) => {
+const socketSetup = (app, sessionMiddleware) => {
   const server = http.createServer(app);
   io = new Server(server);
+  io.engine.use(sessionMiddleware);
 
   io.on('connection', (socket) => {
     console.log('a user connected');
