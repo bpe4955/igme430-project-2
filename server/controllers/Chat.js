@@ -17,7 +17,7 @@ const getMessages = async (req, res) => {
     const query = {
       room: req.session.account.room,
       /* , createdDate: { $gts: req.session.account.createdDate, } */
-};
+    };
     const docs = await Chat.find(query).sort({ createdDate: -1 }).limit(25).lean()
       .exec();
     return res.json({ messages: docs });

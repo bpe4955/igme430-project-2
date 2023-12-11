@@ -117,8 +117,12 @@ const Message = (props) => {
 // Create a single message and add it to the view
 const displayMessage = (msgData) => {
   const messageDiv = document.createElement('div');
+  const chat = document.querySelector('#chat');
   ReactDOM.render(<Message msg={msgData} />, messageDiv);
-  document.querySelector('#chat').appendChild(messageDiv);
+  chat.appendChild(messageDiv);
+  if (!chatFocused) {
+    chat.scrollTop = chat.scrollHeight;
+  }
 }
 
 // Grab messages from the server and display them in the chat using displayMessage
