@@ -7,6 +7,8 @@ const { useState, useEffect } = React;
 
 const handlePassChange = (e) => {
     e.preventDefault();
+    const message = document.querySelector('#passMessage');
+    message.innerText = '';
     const oldPass = e.target.querySelector('#oldpass').value;
     const pass = e.target.querySelector('#pass').value;
     const pass2 = e.target.querySelector('#pass2').value;
@@ -27,7 +29,7 @@ const handlePassChange = (e) => {
     helper.sendPost(e.target.action, { oldPass, pass, pass2 }, result => {
         if (result.message) {
             document.querySelector("#changePassForm").reset();
-            document.querySelector('#passMessage').innerText = 'Password Changed';
+            message.innerText = 'Password Changed';
         }
     });
 
@@ -63,13 +65,15 @@ const ChangePassWindow = (props) => {
 
 const handleVIPChange = (e) => {
     e.preventDefault();
+    const message = document.querySelector('#vipMessage');
+    message.innerText = '';
 
     const VIPField = document.querySelector("#vip-checkbox");
 
     helper.sendPost(e.target.action, { vip: VIPField.checked, }, result => {
         if (result.message) {
             sessionStorage.vip = VIPField.checked;
-            document.querySelector('#vipMessage').innerText = 'VIP Status Changed';
+            message.innerText = 'VIP Status Changed';
             // Update the colors available to the user
             helper.sendGet('/getColors', (result) => {loadColors(result.colors);})
         }
@@ -98,13 +102,15 @@ const ChangeVIPWindow = (props) => {
 
 const handleColorChange = (e) => {
     e.preventDefault();
+    const message = document.querySelector('#colorMessage');
+    message.innerText = '';
 
     const colorField = document.querySelector("#colorField");
 
     helper.sendPost(e.target.action, { color: colorField.value, }, result => {
         if (result.message) {
             sessionStorage.color = colorField.value;
-            document.querySelector('#colorMessage').innerText = 'Color Changed';
+            message.innerText = 'Color Changed';
         }
     });
 

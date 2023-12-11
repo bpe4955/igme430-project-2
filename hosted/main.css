@@ -269,8 +269,13 @@ input {
   text-align: center;
 }
 
+#changeVIPForm, #changeColorForm {
+  width: 175px;
+  height: 100px;
+}
+
 #changeVIPForm {
-  width: 150px;
+  height: 75px;
 }
 
 #error {

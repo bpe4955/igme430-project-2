@@ -314,9 +314,14 @@ input{
   text-align: center;
 }
 
-#changeVIPForm{
-  width: 150px;
+#changeVIPForm, #changeColorForm{
+  width: 175px;
+  height: 100px;
 }
+#changeVIPForm{
+  height: 75px;
+}
+
 
 #error{
   position: absolute;
