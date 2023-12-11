@@ -71,16 +71,14 @@ const handleVIPChange = (e) => {
 
 // Functional stateless component for SignupWindow
 const ChangeVIPWindow = (props) => {
-    const [colors, setColor] = useState(props.colors);
-
     return (
         <div class='mainForm'>
             <h3>Change&nbsp;VIP</h3>
             <form action='/changeVIP' onSubmit={handleVIPChange} method='POST'
-                name='changeColorForm' id='changeColorForm'>
+                name='changeVIPForm' id='changeVIPForm'>
                 <div>
                     <label for="vip-checkbox">VIP: </label>
-                    <input type="checkbox" name='vip-checkbox' id='vip-checkbox' />
+                    <input type="checkbox" name='vip-checkbox' id='vip-checkbox'/>
                 </div>
                 <input type="submit" value="Set VIP Status" />
             </form>
@@ -102,41 +100,7 @@ const handleColorChange = (e) => {
     return false;
 };
 
-const SongContainer = (props) => {
-
-    const [songs, setSongs] = useState(props.songs);
-
-    useEffect(async () => {
-        const response = await fetch('/getSongs');
-        const songs = await response.json();
-        setSongs(songs);
-    }, []);
-
-    if(songs.length === 0) {
-        return (
-            <div>
-                <h3>No Songs Yet!</h3>
-            </div>
-        );
-    }
-
-    const songList = songs.map((song) => {
-        return (
-            <div key={song.title}>
-                <h2>{song.artist} - <i>{song.title}</i></h2>
-            </div>
-        );
-    });
-
-    return(
-        <div>
-            <h1>My favorite songs!</h1>
-            {songList}
-        </div>
-    )
-}
-
-// Functional stateless component for SignupWindow
+// Functional component for ChangeColorWindow
 const ChangeColorWindow = (props) => {
     const [colors, setColors] = useState(props.colors);
 
@@ -147,7 +111,6 @@ const ChangeColorWindow = (props) => {
     )}, []);
 
     const colorList = colors.map((color) => {
-        console.log(color);
         return(
                 <option key={color} value={color}>{color}</option>
         );
@@ -178,9 +141,16 @@ const init = () => {
     ReactDOM.render(<ChangePassWindow />, passDiv);
     document.querySelector('#content').appendChild(passDiv);
 
+    
     constvipDiv = document.createElement('div');
     ReactDOM.render(<ChangeVIPWindow />, constvipDiv);
     document.querySelector('#content').appendChild(constvipDiv);
+    helper.sendGet('/getVip', (result) => {
+        if(result.vip){
+            document.querySelector('#vip-checkbox').checked = true;
+        }
+        else { document.querySelector('#vip-checkbox').checked = false; }
+    });
 
     const colorDiv = document.createElement('div');
     ReactDOM.render(<ChangeColorWindow colors={[]}/>, colorDiv);

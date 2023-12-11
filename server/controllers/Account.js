@@ -113,7 +113,7 @@ const changeRoom = async (req, res) => {
 
 const changeVip = async (req, res) => {
   // Error Checking
-  if (!req.body.vip) { return res.status(400).json({ error: 'VIP is required!' }); }
+  if (!req.body.vip) { req.body.vip = false; }
 
   // updating user
   try {
@@ -141,6 +141,11 @@ const getUsername = (req, res) => {
 const getUserId = (req, res) => {
   if (!req.session) { return res.status(500).json({ message: 'No session data' }); }
   return res.json({ _id: req.session.account._id });
+};
+
+const getVIP = (req, res) => {
+  if (!req.session) { return res.status(500).json({ message: 'No session data' }); }
+  return res.json({ vip: req.session.account.vip });
 };
 
 // Get the rooms the user has access to
@@ -174,4 +179,5 @@ module.exports = {
   getUserId,
   getColors,
   getRooms,
+  getVIP
 };
