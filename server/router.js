@@ -16,6 +16,7 @@ const router = (app) => {
   app.get('/getUserColor', controllers.Account.getUserColor);
   app.get('/getUserName', controllers.Account.getUsername);
   app.get('/getUserId', controllers.Account.getUserId);
+  app.get('/getColors', controllers.Account.getColors);
 
   app.get('/settings', mid.requiresLogin, controllers.Account.settingsPage);
 

@@ -82,7 +82,7 @@ const ChangeVIPWindow = (props) => {
                     <label for="vip-checkbox">VIP: </label>
                     <input type="checkbox" name='vip-checkbox' id='vip-checkbox' />
                 </div>
-                <input type="submit" value="Set Color" />
+                <input type="submit" value="Set VIP Status" />
             </form>
         </div>
     );
@@ -102,24 +102,56 @@ const handleColorChange = (e) => {
     return false;
 };
 
+const SongContainer = (props) => {
+
+    const [songs, setSongs] = useState(props.songs);
+
+    useEffect(async () => {
+        const response = await fetch('/getSongs');
+        const songs = await response.json();
+        setSongs(songs);
+    }, []);
+
+    if(songs.length === 0) {
+        return (
+            <div>
+                <h3>No Songs Yet!</h3>
+            </div>
+        );
+    }
+
+    const songList = songs.map((song) => {
+        return (
+            <div key={song.title}>
+                <h2>{song.artist} - <i>{song.title}</i></h2>
+            </div>
+        );
+    });
+
+    return(
+        <div>
+            <h1>My favorite songs!</h1>
+            {songList}
+        </div>
+    )
+}
+
 // Functional stateless component for SignupWindow
 const ChangeColorWindow = (props) => {
-    const [colors, setColor] = useState(props.colors);
+    const [colors, setColors] = useState(props.colors);
 
-    // const colorList = props.colors.map((color) => {
-    //     if(color.selected){
-    //         return(
-    //             <div key={color.color}>
-    //                 <option value={color.color} selected>{color.color}</option>
-    //             </div> 
-    //         );
-    //     }
-    //     return(
-    //         <div key={color.color}>
-    //             <option value={color.color}>{color.color}</option>
-    //         </div> 
-    //     );
-    // });
+    useEffect(() => {
+        helper.sendGet('/getColors', (result) => {
+            setColors(result.colors);
+        }
+    )}, []);
+
+    const colorList = colors.map((color) => {
+        console.log(color);
+        return(
+                <option key={color} value={color}>{color}</option>
+        );
+    });
 
     return (
         <div class='mainForm'>
@@ -129,10 +161,7 @@ const ChangeColorWindow = (props) => {
                 <div>
                     <label for="color">Color: </label>
                     <select id='colorField' name="color">
-                        {/* {colorList} */}
-                        <option value="black">black</option>
-                        <option value="blue">blue</option>
-                        <option value="red">red</option>
+                        {colorList}
                     </select>
                 </div>
                 <input type="submit" value="Set Color" />
@@ -149,13 +178,14 @@ const init = () => {
     ReactDOM.render(<ChangePassWindow />, passDiv);
     document.querySelector('#content').appendChild(passDiv);
 
-    const colorDiv = document.createElement('div');
-    ReactDOM.render(<ChangeColorWindow />, colorDiv);
-    document.querySelector('#content').appendChild(colorDiv);
-
     constvipDiv = document.createElement('div');
     ReactDOM.render(<ChangeVIPWindow />, constvipDiv);
     document.querySelector('#content').appendChild(constvipDiv);
+
+    const colorDiv = document.createElement('div');
+    ReactDOM.render(<ChangeColorWindow colors={[]}/>, colorDiv);
+    document.querySelector('#content').appendChild(colorDiv);
+    
 
 };
 

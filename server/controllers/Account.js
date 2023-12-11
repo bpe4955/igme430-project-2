@@ -81,7 +81,7 @@ const changeColor = async (req, res) => {
   // Error Checking
   if (!req.body.color) { return res.status(400).json({ error: 'Color is required!' }); }
 
-  // pdating user
+  // updating user
   try {
     await Account.updateOne({ _id: req.session.account._id }, { color: req.body.color });
     // Successfully updated Password
@@ -143,6 +143,22 @@ const getUserId = (req, res) => {
   return res.json({ _id: req.session.account._id });
 };
 
+// Get the rooms the user has access to
+const getRooms = (req, res) => {
+  if (!req.session) { return res.status(500).json({ message: 'No session data' }); }
+  const rooms = ['general', 'memes'];
+  if (req.session.account.vip) { rooms.push('vip'); }
+  return res.json({ rooms });
+};
+
+// Get the colors the user has access to
+const getColors = (req, res) => {
+  if (!req.session) { return res.status(500).json({ message: 'No session data' }); }
+  const colors = ['black', 'blue', 'red'];
+  if (req.session.account.vip) { colors.push('gray'); }
+  return res.json({ colors });
+};
+
 module.exports = {
   loginPage,
   settingsPage,
@@ -156,4 +172,6 @@ module.exports = {
   getUserColor,
   getUsername,
   getUserId,
+  getColors,
+  getRooms,
 };
