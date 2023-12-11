@@ -1,8 +1,10 @@
 body {
-  height: 100vh;
+  height: 90vh;
   width: 100%;
   margin: 0;
   padding: 0;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 #top {
@@ -265,4 +267,21 @@ nav {
 
 input {
   text-align: center;
+}
+
+#changeVIPForm {
+  width: 150px;
+}
+
+#error {
+  position: absolute;
+  right: 25px;
+  width: 200px;
+  bottom: 25px;
+  height: 200px;
+  color: #dcdcdc;
+  background-color: rgb(88, 88, 88);
+  border: 2px solid #dcdcdc;
+  padding: 0.5rem;
+  font-size: larger;
 }

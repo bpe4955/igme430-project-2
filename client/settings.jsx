@@ -11,18 +11,22 @@ const handlePassChange = (e) => {
     const pass2 = e.target.querySelector('#pass2').value;
 
     if (!oldPass || !pass || !pass2) {
+        helper.handleError({error: 'All fields must be filled'});
         return false;
     }
     if (pass !== pass2) {
+        helper.handleError({error: 'Passwords don\'t match!'});
         return false;
     }
     if (oldPass === pass) {
+        helper.handleError({error: 'New Password cannot match current password!'});
         return false;
     }
 
     helper.sendPost(e.target.action, { oldPass, pass, pass2 }, result => {
         if (result.message) {
             document.querySelector("#changePassForm").reset();
+            helper.handleError({error: 'Password has successfully changed!'})
         }
     });
 
@@ -63,6 +67,7 @@ const handleVIPChange = (e) => {
     helper.sendPost(e.target.action, { vip: VIPField.checked, }, result => {
         if (result.message) {
             sessionStorage.vip = VIPField.checked;
+            document.querySelector('#vipMessage').innerText = 'VIP Status Changed';
         }
     });
 
@@ -81,6 +86,7 @@ const ChangeVIPWindow = (props) => {
                     <input type="checkbox" name='vip-checkbox' id='vip-checkbox'/>
                 </div>
                 <input type="submit" value="Set VIP Status" />
+                <p id="vipMessage" class="statusMessage"></p>
             </form>
         </div>
     );
@@ -94,6 +100,7 @@ const handleColorChange = (e) => {
     helper.sendPost(e.target.action, { color: colorField.value, }, result => {
         if (result.message) {
             sessionStorage.color = colorField.value;
+            document.querySelector('#colorMessage').innerText = 'Color Changed';
         }
     });
 
@@ -128,6 +135,7 @@ const ChangeColorWindow = (props) => {
                     </select>
                 </div>
                 <input type="submit" value="Set Color" />
+                <p id="colorMessage" class="statusMessage"></p>
             </form>
         </div>
     );

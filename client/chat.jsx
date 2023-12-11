@@ -141,8 +141,6 @@ const init = () => {
   initChannelSelect();
   socket.on('chat message', displayMessage);
   socket.on('current room', getRoom)
-  //const channelSelect = document.getElementById('channelSelect');
-  //document.querySelector('#title-message').textContent = `NON-PICTORAL CHAT: ${channelSelect.value[0].toUpperCase() + channelSelect.value.substring(1)}`;
 };
 
 //When the window loads, run init.

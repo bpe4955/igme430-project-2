@@ -160,8 +160,8 @@ const getRooms = (req, res) => {
 const getColors = (req, res) => {
   if (!req.session) { return res.status(500).json({ message: 'No session data' }); }
   const colors = ['black', 'blue', 'red'];
-  if (req.session.account.vip) { 
-    colors.push('gray'); 
+  if (req.session.account.vip) {
+    colors.push('gray');
     colors.push('purple');
   }
   return res.json({ colors });
