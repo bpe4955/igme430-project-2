@@ -1,15 +1,39 @@
+
+
+const React = require('react');
+const ReactDOM = require('react-dom');
+const { useState, useEffect } = React;
+
+let updateError;
+
+// React component to show error messages
+const Error = (props) => {
+    const [error, setError] = useState(props.error);
+
+    updateError = (error) => {
+        setError(error);
+    }
+
+    return (
+        <div>
+            <p><b>Error</b>: {error}</p>
+        </div>
+    );
+}
+
 const handleError = (result) => {
     const errorDiv = document.querySelector("#error");
-    errorDiv.hidden = false;
-    errorDiv.innerHTML = `<p><b>Error</b>: ${result.error}</p>`;
-    if(result.status){
-        errorDiv.innerHTML += `<p><b>Status</b>: ${result.status}</p>`;
+    if(errorDiv.innerHTML === ""){
+        ReactDOM.render(<Error error={result.error}/>, errorDiv);
     }
+    else{
+        updateError(result.error);
+    }
+    errorDiv.hidden = false;
 };
 
 const clearError = () => {
     const errorDiv = document.querySelector("#error");
-    errorDiv.innerHTML = "";
     errorDiv.hidden = true;
 };
 
@@ -29,7 +53,7 @@ const sendPost = async (url, data, handler) => {
         window.location = result.redirect;
     }
 
-    if(result.error) {
+    if (result.error) {
         handleError(result);
     }
 

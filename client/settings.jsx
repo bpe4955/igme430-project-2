@@ -26,7 +26,7 @@ const handlePassChange = (e) => {
     helper.sendPost(e.target.action, { oldPass, pass, pass2 }, result => {
         if (result.message) {
             document.querySelector("#changePassForm").reset();
-            helper.handleError({error: 'Password has successfully changed!'})
+            document.querySelector('#passMessage').innerText = 'Password Changed';
         }
     });
 
@@ -54,6 +54,7 @@ const ChangePassWindow = (props) => {
                     <input id='pass2' type='text' name='pass2' placeholder='retype password' />
                 </div>
                 <input type='submit' className='formSubmit' value='Change' />
+                <p id="passMessage" class="statusMessage"></p>
             </form>
         </div>
     );
