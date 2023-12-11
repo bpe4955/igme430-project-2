@@ -7,7 +7,7 @@ const { Chat } = models;
 const chatPage = async (req, res) => res.render('app', {
   userName: req.session.account.username,
   color: req.session.account.color,
-  chatRoom: 'General',
+  chatRoom: req.session.account.room,
 });
 
 const getMessages = async (req, res) => {

@@ -9,9 +9,6 @@ const sassTask = (done) => {
     gulp.src('./scss/main.scss')
         .pipe(sass().on('error', sass.logError))
         .pipe(gulp.dest('./hosted'));
-    gulp.src('./scss/domo-style.scss')
-    .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest('./hosted'));
 
     done();
 };

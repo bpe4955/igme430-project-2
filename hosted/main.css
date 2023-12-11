@@ -120,6 +120,12 @@ select:focus {
   background-color: salmon;
 }
 
+.user-purple {
+  color: rgb(88, 1, 88);
+  border-color: purple;
+  background-color: violet;
+}
+
 /* Display the user's message by their name */
 .user-message {
   margin-top: 0;
@@ -147,6 +153,10 @@ select:focus {
   border-color: red;
 }
 
+.message-purple {
+  border-color: purple;
+}
+
 /* Area to send messages */
 #chatbox,
 #top {
@@ -154,6 +164,7 @@ select:focus {
   border: 2px solid rgb(88, 88, 88);
   border-radius: 5px;
   width: fit-content;
+  min-width: 250px;
   padding: 0.5rem;
 }
 
@@ -167,6 +178,7 @@ select:focus {
 
 #messageField {
   margin-left: -4px;
+  text-align: left;
 }
 
 #messageField:focus {

@@ -18,6 +18,7 @@ const router = (app) => {
   app.get('/getUserId', controllers.Account.getUserId);
   app.get('/getColors', controllers.Account.getColors);
   app.get('/getVip', controllers.Account.getVIP);
+  app.get('/getRooms', controllers.Account.getRooms);
 
   app.get('/settings', mid.requiresLogin, controllers.Account.settingsPage);
 

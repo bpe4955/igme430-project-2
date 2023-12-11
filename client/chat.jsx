@@ -1,6 +1,7 @@
 const helper = require('./helper.js');
 const React = require('react');
 const ReactDOM = require('react-dom');
+const { useState, useEffect } = React;
 
 const socket = io();
 
@@ -50,11 +51,42 @@ const initMessageBox = () => {
 const getRoom = (room) => {
   document.getElementById('channelSelect').value = room;
   const title = document.getElementById('title-message');
-  title.textContent = `NON-PICTORAL CHAT: ${channelSelect.value[0].toUpperCase() + channelSelect.value.substring(1)}`;
+  const channelSelect = document.querySelector("#channelSelect");
+  if(channelSelect.value !== "" && channelSelect.value){
+    title.textContent = `NON-PICTORAL CHAT: ${channelSelect.value[0].toUpperCase() + channelSelect.value.substring(1)}`;
+  }
+}
+
+// Functional component for RoomForm
+const RoomForm = (props) => {
+  const [rooms, setRooms] = useState(props.rooms);
+
+    useEffect(() => {
+        helper.sendGet('/getRooms', (result) => {
+          setRooms(result.rooms);
+        }
+    )}, []);
+
+    const roomList = rooms.map((room) => {
+        return(
+                <option key={room} value={room}>{room[0].toUpperCase() + room.substring(1)}</option>
+        );
+    });
+
+  return (
+    <form id="roomForm">
+      <select name="channel" id="channelSelect">
+      {roomList}
+      </select>
+    </form>
+  );
 }
 
 // Init the Channel Select dropdown events
 const initChannelSelect = async () => {
+  const roomSelectDiv = document.querySelector('#roomSelect');
+  ReactDOM.render(<RoomForm rooms={[]}/>, roomSelectDiv);
+
   const channelSelect = document.getElementById('channelSelect');
   const messages = document.getElementById('chat');
   socket.emit('current room');
@@ -66,7 +98,7 @@ const initChannelSelect = async () => {
   });
 }
 
-// Functional stateless component for Message
+// Functional component for Message
 const Message = (props) => {
   const userClassList = `user-name user-${props.msg.color}`;
   const messageClassList = `user-message message-${props.msg.color}`;
@@ -109,7 +141,8 @@ const init = () => {
   initChannelSelect();
   socket.on('chat message', displayMessage);
   socket.on('current room', getRoom)
-  document.querySelector('#title-message').textContent = `NON-PICTORAL CHAT: ${channelSelect.value[0].toUpperCase() + channelSelect.value.substring(1)}`;
+  //const channelSelect = document.getElementById('channelSelect');
+  //document.querySelector('#title-message').textContent = `NON-PICTORAL CHAT: ${channelSelect.value[0].toUpperCase() + channelSelect.value.substring(1)}`;
 };
 
 //When the window loads, run init.
