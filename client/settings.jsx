@@ -74,7 +74,6 @@ const handleVIPChange = (e) => {
 
     helper.sendPost(e.target.action, { vip: VIPField.checked, }, result => {
         if (result.message) {
-            sessionStorage.vip = VIPField.checked;
             message.innerText = 'VIP Status Changed';
             // Update the colors available to the user
             helper.sendGet('/getColors', (result) => { loadColors(result.colors); })

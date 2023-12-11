@@ -1,16 +1,20 @@
 const models = require('../models');
 
+// Get account model to reference
 const { Account } = models;
 
+// Load pages
 const loginPage = (req, res) => res.render('login');
 
 const settingsPage = (req, res) => res.render('settings');
 
+// Destroy the session and redirect to main page
 const logout = (req, res) => {
   req.session.destroy();
   res.redirect('/');
 };
 
+// Check username and password against the database before creating a session for the user
 const login = (req, res) => {
   const username = `${req.body.username}`;
   const pass = `${req.body.pass}`;
@@ -25,6 +29,8 @@ const login = (req, res) => {
   });
 };
 
+// Error check before creating a new account in the database and creating a session for the user
+// Hashes the user's password
 const signup = async (req, res) => {
   const username = `${req.body.username}`;
   const pass = `${req.body.pass}`;
@@ -49,6 +55,8 @@ const signup = async (req, res) => {
   return res.json({ redirect: '/chat' });
 };
 
+// Error check before updating the user's password in the database
+// Hashes the user's password
 const changePass = async (req, res) => {
   const oldPass = `${req.body.oldPass}`;
   const pass = `${req.body.pass}`;
@@ -77,6 +85,8 @@ const changePass = async (req, res) => {
   });
 };
 
+// POST
+// Updates the color associated with a user in the database and updates their session
 const changeColor = async (req, res) => {
   // Error Checking
   if (!req.body.color) { return res.status(400).json({ error: 'Color is required!' }); }
@@ -94,6 +104,8 @@ const changeColor = async (req, res) => {
   }
 };
 
+// POST
+// Updates the room a user is in in the database and updates their session
 const changeRoom = async (req, res) => {
   // Error Checking
   if (!req.body.room) { return res.status(400).json({ error: 'Room is required!' }); }
@@ -111,6 +123,8 @@ const changeRoom = async (req, res) => {
   }
 };
 
+// POST
+// Updates the user's VIP status in the database and updates their session
 const changeVip = async (req, res) => {
   // Error Checking
   if (!req.body.vip) { req.body.vip = false; }
@@ -128,26 +142,14 @@ const changeVip = async (req, res) => {
   }
 };
 
-const getUserColor = (req, res) => {
-  if (!req.session) { return res.status(500).json({ message: 'No session data' }); }
-  return res.json({ color: req.session.account.color });
-};
-
-const getUsername = (req, res) => {
-  if (!req.session) { return res.status(500).json({ message: 'No session data' }); }
-  return res.json({ username: req.session.account.username });
-};
-
-const getUserId = (req, res) => {
-  if (!req.session) { return res.status(500).json({ message: 'No session data' }); }
-  return res.json({ _id: req.session.account._id });
-};
-
+// GET
+// Gets the user's VIP status (bool)
 const getVIP = (req, res) => {
   if (!req.session) { return res.status(500).json({ message: 'No session data' }); }
   return res.json({ vip: req.session.account.vip });
 };
 
+// GET
 // Get the rooms the user has access to
 const getRooms = (req, res) => {
   if (!req.session) { return res.status(500).json({ message: 'No session data' }); }
@@ -156,6 +158,7 @@ const getRooms = (req, res) => {
   return res.json({ rooms });
 };
 
+// GET
 // Get the colors the user has access to
 const getColors = (req, res) => {
   if (!req.session) { return res.status(500).json({ message: 'No session data' }); }
@@ -177,9 +180,6 @@ module.exports = {
   changeColor,
   changeRoom,
   changeVip,
-  getUserColor,
-  getUsername,
-  getUserId,
   getColors,
   getRooms,
   getVIP,

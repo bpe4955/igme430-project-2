@@ -65,10 +65,12 @@ const handleRoomChange = (socket, roomName) => {
   socket.join(roomName);
 };
 
+// sends the user the name of the chatroom they are in
 const getCurrentRooms = (socket) => {
   io.to(socket.id).emit('current room', socket.request.session.account.room);
 };
 
+// Create the server and hook up events
 const socketSetup = (app, sessionMiddleware) => {
   const server = http.createServer(app);
   io = new Server(server);

@@ -19,7 +19,7 @@ let AccountModel = {};
 
 /* Our schema defines the data we will store. A username (string of alphanumeric
    characters), a password (actually the hashed version of the password created
-   by bcrypt), and the created date.
+   by bcrypt), color (string), room (string), vip status (bool), and the created date.
 */
 const AccountSchema = new mongoose.Schema({
   username: {

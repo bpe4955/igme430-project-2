@@ -1,23 +1,25 @@
-// const { contentSecurityPolicy } = require('helmet');
-// const models = require('../models');
 const models = require('../models');
 
+// get chat model to reference
 const { Chat } = models;
 
+// Load app page
 const chatPage = async (req, res) => res.render('app', {
   userName: req.session.account.username,
   color: req.session.account.color,
   chatRoom: req.session.account.room,
 });
 
+// GET
+// Gets the 25 most recent messages in the user's room
 const getMessages = async (req, res) => {
   try {
     const query = {
       room: req.session.account.room,
-      /* , createdDate: { $gts: req.session.account.createdDate, } */ };
+      /* , createdDate: { $gts: req.session.account.createdDate, } */
+};
     const docs = await Chat.find(query).sort({ createdDate: -1 }).limit(25).lean()
       .exec();
-    // .select('user message color');
     return res.json({ messages: docs });
   } catch (err) {
     console.log(err);
@@ -25,7 +27,8 @@ const getMessages = async (req, res) => {
   }
 };
 
-// function to add a message from a POST body
+// POST
+// Error checks and stores a message object in the database
 const sendMessage = async (req, res) => {
   // default json message
   const responseJSON = {

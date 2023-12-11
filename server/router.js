@@ -13,9 +13,6 @@ const router = (app) => {
   app.post('/sendMessage', mid.requiresLogin, controllers.Chat.sendMessage);
   app.get('/getMessages', mid.requiresLogin, controllers.Chat.getMessages);
 
-  app.get('/getUserColor', controllers.Account.getUserColor); //
-  app.get('/getUserName', controllers.Account.getUsername); //
-  app.get('/getUserId', controllers.Account.getUserId); //
   app.get('/getColors', mid.requiresLogin, controllers.Account.getColors);
   app.get('/getVip', mid.requiresLogin, controllers.Account.getVIP);
   app.get('/getRooms', mid.requiresLogin, controllers.Account.getRooms);
