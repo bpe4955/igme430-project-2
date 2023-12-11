@@ -96,14 +96,31 @@ const changeColor = async (req, res) => {
 
 const changeRoom = async (req, res) => {
   // Error Checking
-  if (!req.body.room) { return res.status(400).json({ error: 'Color is required!' }); }
+  if (!req.body.room) { return res.status(400).json({ error: 'Room is required!' }); }
 
-  // pdating user
+  // updating user
   try {
     await Account.updateOne({ _id: req.session.account._id }, { room: req.body.room });
     // Successfully updated Password
     req.session.account.room = req.body.room;
     return res.status(200).json({ message: 'room Updated!' });
+  } catch (error) {
+    console.log(error);
+    // Server Error
+    return res.status(500).json({ error: 'An error occured!' });
+  }
+};
+
+const changeVip = async (req, res) => {
+  // Error Checking
+  if (!req.body.vip) { return res.status(400).json({ error: 'VIP is required!' }); }
+
+  // updating user
+  try {
+    await Account.updateOne({ _id: req.session.account._id }, { vip: req.body.vip });
+    // Successfully updated Password
+    req.session.account.vip = req.body.vip;
+    return res.status(200).json({ message: 'Vip status Updated!' });
   } catch (error) {
     console.log(error);
     // Server Error
@@ -135,6 +152,7 @@ module.exports = {
   changePass,
   changeColor,
   changeRoom,
+  changeVip,
   getUserColor,
   getUsername,
   getUserId,

@@ -55,6 +55,39 @@ const ChangePassWindow = (props) => {
     );
 };
 
+const handleVIPChange = (e) => {
+    e.preventDefault();
+
+    const VIPField = document.querySelector("#vip-checkbox");
+
+    helper.sendPost(e.target.action, { vip: VIPField.checked, }, result => {
+        if (result.message) {
+            sessionStorage.vip = VIPField.checked;
+        }
+    });
+
+    return false;
+};
+
+// Functional stateless component for SignupWindow
+const ChangeVIPWindow = (props) => {
+    const [colors, setColor] = useState(props.colors);
+
+    return (
+        <div class='mainForm'>
+            <h3>Change&nbsp;VIP</h3>
+            <form action='/changeVIP' onSubmit={handleVIPChange} method='POST'
+                name='changeColorForm' id='changeColorForm'>
+                <div>
+                    <label for="vip-checkbox">VIP: </label>
+                    <input type="checkbox" name='vip-checkbox' id='vip-checkbox' />
+                </div>
+                <input type="submit" value="Set Color" />
+            </form>
+        </div>
+    );
+};
+
 const handleColorChange = (e) => {
     e.preventDefault();
 
@@ -119,6 +152,10 @@ const init = () => {
     const colorDiv = document.createElement('div');
     ReactDOM.render(<ChangeColorWindow />, colorDiv);
     document.querySelector('#content').appendChild(colorDiv);
+
+    constvipDiv = document.createElement('div');
+    ReactDOM.render(<ChangeVIPWindow />, constvipDiv);
+    document.querySelector('#content').appendChild(constvipDiv);
 
 };
 

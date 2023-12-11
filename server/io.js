@@ -67,7 +67,7 @@ const handleRoomChange = (socket, roomName) => {
 
 const getCurrentRooms = (socket) => {
   io.to(socket.id).emit('current room', socket.request.session.account.room);
-}
+};
 
 const socketSetup = (app, sessionMiddleware) => {
   const server = http.createServer(app);

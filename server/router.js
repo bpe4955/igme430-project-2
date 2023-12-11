@@ -22,6 +22,7 @@ const router = (app) => {
   app.post('/changePass', mid.requiresLogin, controllers.Account.changePass);
   app.post('/changeColor', mid.requiresLogin, controllers.Account.changeColor);
   app.post('/changeRoom', mid.requiresLogin, controllers.Account.changeRoom);
+  app.post('/changeVIP', mid.requiresLogin, controllers.Account.changeVip);
 
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
 };
