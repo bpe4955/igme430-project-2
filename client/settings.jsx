@@ -1,3 +1,4 @@
+const { set } = require('mongoose');
 const helper = require('./helper.js');
 const React = require('react');
 const ReactDOM = require('react-dom');
@@ -69,6 +70,8 @@ const handleVIPChange = (e) => {
         if (result.message) {
             sessionStorage.vip = VIPField.checked;
             document.querySelector('#vipMessage').innerText = 'VIP Status Changed';
+            // Update the colors available to the user
+            helper.sendGet('/getColors', (result) => {loadColors(result.colors);})
         }
     });
 
@@ -108,6 +111,8 @@ const handleColorChange = (e) => {
     return false;
 };
 
+let loadColors;
+
 // Functional component for ChangeColorWindow
 const ChangeColorWindow = (props) => {
     const [colors, setColors] = useState(props.colors);
@@ -117,6 +122,8 @@ const ChangeColorWindow = (props) => {
             setColors(result.colors);
         }
     )}, []);
+
+    loadColors = (loadedColors) => {setColors(loadedColors);}
 
     const colorList = colors.map((color) => {
         return(
