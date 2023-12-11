@@ -19,20 +19,26 @@ body {
   text-align: center;
   margin: 0.5rem auto 0;
 
-  a, a:link, a:visited, a:hover, a:active{
+  a,
+  a:link,
+  a:visited,
+  a:hover,
+  a:active {
     font-size: 1.25rem;
     display: block;
     padding: 3px;
     border: 0px solid $mainColor;
     border-radius: 5px;
-    color:$contrastColor;
-    transition: background-color 0.5s ease, color 0.5s ease ;
+    color: $contrastColor;
+    transition: background-color 0.5s ease, color 0.5s ease;
   }
-  a:hover{
+
+  a:hover {
     background-color: $contrastColorTrans;
     color: $mainColor;
   }
 }
+
 // Dropdown Styling
 // https://www.sliderrevolution.com/resources/css-select-styles/
 // Designed by: Veiko
@@ -50,7 +56,7 @@ select {
 
   /* reset */
 
-  margin: 0;      
+  margin: 0;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -73,6 +79,7 @@ select {
   background-repeat: no-repeat;
   color: $contrastColor;
 }
+
 select:focus {
   background-image:
     linear-gradient(45deg, $contrastColor 50%, transparent 50%),
@@ -238,29 +245,34 @@ nav {
   padding: 0.2rem 2rem;
 }
 
-.navlink{
-  color:$mainColor;
+.navlink {
+  color: $mainColor;
   font-size: 1.5rem;
   float: left;
   margin: 0 0.5rem;
   height: 100%;
 
-  a, a:link, a:visited, a:hover, a:active{
+  a,
+  a:link,
+  a:visited,
+  a:hover,
+  a:active {
     line-height: calc($navHeight - 3px);
     padding: 3px;
     border: 0px solid $mainColor;
     border-radius: 5px;
-    color:$mainColor;
+    color: $mainColor;
     text-decoration: none;
     transition: background-color 0.5s ease;
   }
-  a:hover{
+
+  a:hover {
     background-color: $mainColorTrans;
   }
 }
 
 
-.mainForm{
+.mainForm {
   width: fit-content;
   margin: 3rem auto;
   padding: 1rem;
@@ -268,18 +280,20 @@ nav {
   background-color: $mainColor;
   color: $contrastColor;
 
-  div{
+  div {
     margin: 0 auto;
     text-align: center;
     margin: 5px 0;
   }
-  label{
+
+  label {
     display: inline-block;
     width: fit-content;
     margin-right: 10px;
     text-align: right;
   }
-  .formSubmit{
+
+  .formSubmit {
     transition: background-color 0.4s ease;
     display: block;
     text-align: center;
@@ -295,35 +309,42 @@ nav {
     border-radius: 5px;
     border-bottom-left-radius: 0px;
     padding: 3px 0px;
-    
+
     text-decoration: none;
   }
 
-  .formSubmit:hover{
+  .formSubmit:hover {
     background-color: $contrastColorTrans;
     color: $mainColor;
   }
 }
-#user, #pass, #pass2, #oldpass {
+
+#user,
+#pass,
+#pass2,
+#oldpass {
   text-align: center;
   font-size: 1.1em;
   width: 180px;
   border-radius: 6px;
 }
-input{
+
+input {
   text-align: center;
 }
 
-#changeVIPForm, #changeColorForm{
+#changeVIPForm,
+#changeColorForm {
   width: 175px;
   height: 100px;
 }
-#changeVIPForm{
+
+#changeVIPForm {
   height: 75px;
 }
 
 
-#error{
+#error {
   position: absolute;
   right: 25px;
   width: 200px;
@@ -331,7 +352,7 @@ input{
   height: 200px;
   color: $mainColor;
   background-color: $contrastColor;
-  border: 2px solid $mainColor; 
+  border: 2px solid $mainColor;
   padding: 0.5rem;
   font-size: larger;
 }

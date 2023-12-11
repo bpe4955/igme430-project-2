@@ -35,10 +35,10 @@ const initMessageBox = () => {
     e.preventDefault();
 
     if (editBox.value) {
-     const msg = {
+      const msg = {
         message: editBox.value,
-     }
-     await sendMessagePost(msg);
+      }
+      await sendMessagePost(msg);
       socket.emit('chat message', msg);
       editBox.value = '';
     }
@@ -48,35 +48,38 @@ const initMessageBox = () => {
 };
 
 // Get the user's room from the session data
+// Displays to the user their current room and makes other elements consistent
 const getRoom = (room) => {
   document.getElementById('channelSelect').value = room;
   const title = document.getElementById('title-message');
   const channelSelect = document.querySelector("#channelSelect");
-  if(channelSelect.value !== "" && channelSelect.value){
+  if (channelSelect.value !== "" && channelSelect.value) {
     title.textContent = `NON-PICTORAL CHAT: ${channelSelect.value[0].toUpperCase() + channelSelect.value.substring(1)}`;
   }
 }
 
 // Functional component for RoomForm
+// Used to create a dropdown menu for the user to select their room
 const RoomForm = (props) => {
   const [rooms, setRooms] = useState(props.rooms);
 
-    useEffect(() => {
-        helper.sendGet('/getRooms', (result) => {
-          setRooms(result.rooms);
-        }
-    )}, []);
+  useEffect(() => {
+    helper.sendGet('/getRooms', (result) => {
+      setRooms(result.rooms);
+    }
+    )
+  }, []);
 
-    const roomList = rooms.map((room) => {
-        return(
-                <option key={room} value={room}>{room[0].toUpperCase() + room.substring(1)}</option>
-        );
-    });
+  const roomList = rooms.map((room) => {
+    return (
+      <option key={room} value={room}>{room[0].toUpperCase() + room.substring(1)}</option>
+    );
+  });
 
   return (
     <form id="roomForm">
       <select name="channel" id="channelSelect">
-      {roomList}
+        {roomList}
       </select>
     </form>
   );
@@ -85,7 +88,7 @@ const RoomForm = (props) => {
 // Init the Channel Select dropdown events
 const initChannelSelect = async () => {
   const roomSelectDiv = document.querySelector('#roomSelect');
-  ReactDOM.render(<RoomForm rooms={[]}/>, roomSelectDiv);
+  ReactDOM.render(<RoomForm rooms={[]} />, roomSelectDiv);
 
   const channelSelect = document.getElementById('channelSelect');
   const messages = document.getElementById('chat');
@@ -94,11 +97,12 @@ const initChannelSelect = async () => {
   channelSelect.addEventListener('change', () => {
     messages.innerHTML = `<p id="title-message">NON-PICTORAL CHAT: ${channelSelect.value[0].toUpperCase() + channelSelect.value.substring(1)}</p>`;
     socket.emit('room change', channelSelect.value);
-    helper.sendPost('changeRoom', {room: channelSelect.value}, requestInitialMessages);
+    helper.sendPost('changeRoom', { room: channelSelect.value }, requestInitialMessages);
   });
 }
 
 // Functional component for Message
+// Provides a template to create messages to display in the chat
 const Message = (props) => {
   const userClassList = `user-name user-${props.msg.color}`;
   const messageClassList = `user-message message-${props.msg.color}`;
@@ -110,12 +114,14 @@ const Message = (props) => {
   );
 }
 
+// Create a single message and add it to the view
 const displayMessage = (msgData) => {
   const messageDiv = document.createElement('div');
   ReactDOM.render(<Message msg={msgData} />, messageDiv);
   document.querySelector('#chat').appendChild(messageDiv);
 }
 
+// Grab messages from the server and display them in the chat using displayMessage
 const requestInitialMessages = async () => {
   const response = await fetch(`/getMessages`);
   const data = await response.json();
@@ -125,8 +131,6 @@ const requestInitialMessages = async () => {
 }
 
 
-
-// Init function is called when window.onload runs (set below).
 // Set up connections and events
 const init = () => {
   // Get past messages

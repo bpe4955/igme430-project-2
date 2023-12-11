@@ -2,6 +2,8 @@ const helper = require('./helper.js');
 const React = require('react');
 const ReactDOM = require('react-dom');
 
+// Function attached to the "sign in" button
+// Requires both username and password fields to have a value
 const handleLogin = (e) => {
     e.preventDefault();
 
@@ -12,12 +14,13 @@ const handleLogin = (e) => {
         return false;
     }
 
-    sessionStorage.setItem('userName', username);
     helper.sendPost(e.target.action, { username, pass });
 
     return false;
 };
 
+// Function attached to the "sign up" button
+// Checks for errors before passing data to the server
 const handleSignup = (e) => {
     e.preventDefault();
 
@@ -32,8 +35,6 @@ const handleSignup = (e) => {
         return false;
     }
 
-    sessionStorage.setItem('userName', username);
-    sessionStorage.setItem('color', "black");
     helper.sendPost(e.target.action, { username, pass, pass2 });
 
     return false;
@@ -74,11 +75,12 @@ const SignupWindow = (props) => {
                 <label htmlFor='pass2'>Password: </label>
                 <input id='pass2' type='text' name='pass2' placeholder='retype password' />
             </div>
-            <input type='submit' className='formSubmit' value='Sign in' />
+            <input type='submit' className='formSubmit' value='Sign up' />
         </form>
     );
 };
 
+// Set up connections and events
 const init = () => {
     const loginButton = document.querySelector('#loginButton');
     const signupButton = document.querySelector('#signupButton');

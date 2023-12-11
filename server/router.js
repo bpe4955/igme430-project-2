@@ -13,12 +13,12 @@ const router = (app) => {
   app.post('/sendMessage', mid.requiresLogin, controllers.Chat.sendMessage);
   app.get('/getMessages', mid.requiresLogin, controllers.Chat.getMessages);
 
-  app.get('/getUserColor', controllers.Account.getUserColor);
-  app.get('/getUserName', controllers.Account.getUsername);
-  app.get('/getUserId', controllers.Account.getUserId);
-  app.get('/getColors', controllers.Account.getColors);
-  app.get('/getVip', controllers.Account.getVIP);
-  app.get('/getRooms', controllers.Account.getRooms);
+  app.get('/getUserColor', controllers.Account.getUserColor); //
+  app.get('/getUserName', controllers.Account.getUsername); //
+  app.get('/getUserId', controllers.Account.getUserId); //
+  app.get('/getColors', mid.requiresLogin, controllers.Account.getColors);
+  app.get('/getVip', mid.requiresLogin, controllers.Account.getVIP);
+  app.get('/getRooms', mid.requiresLogin, controllers.Account.getRooms);
 
   app.get('/settings', mid.requiresLogin, controllers.Account.settingsPage);
 

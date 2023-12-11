@@ -4,7 +4,8 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const { useState, useEffect } = React;
 
-
+// Function attached to the 'change password' button
+// Checks for some errors before passing data to the server
 const handlePassChange = (e) => {
     e.preventDefault();
     const message = document.querySelector('#passMessage');
@@ -14,18 +15,19 @@ const handlePassChange = (e) => {
     const pass2 = e.target.querySelector('#pass2').value;
 
     if (!oldPass || !pass || !pass2) {
-        helper.handleError({error: 'All fields must be filled'});
+        helper.handleError({ error: 'All fields must be filled' });
         return false;
     }
     if (pass !== pass2) {
-        helper.handleError({error: 'Passwords don\'t match!'});
+        helper.handleError({ error: 'Passwords don\'t match!' });
         return false;
     }
     if (oldPass === pass) {
-        helper.handleError({error: 'New Password cannot match current password!'});
+        helper.handleError({ error: 'New Password cannot match current password!' });
         return false;
     }
 
+    // If data is valid, attempt to change the password
     helper.sendPost(e.target.action, { oldPass, pass, pass2 }, result => {
         if (result.message) {
             document.querySelector("#changePassForm").reset();
@@ -35,8 +37,6 @@ const handlePassChange = (e) => {
 
     return false;
 };
-
-
 
 // Functional stateless component for ChangePassWindow
 const ChangePassWindow = (props) => {
@@ -63,6 +63,8 @@ const ChangePassWindow = (props) => {
     );
 };
 
+// Function attached to the 'set VIP status' button
+// Sends a POST request to the server to update the user's VIP status
 const handleVIPChange = (e) => {
     e.preventDefault();
     const message = document.querySelector('#vipMessage');
@@ -75,31 +77,33 @@ const handleVIPChange = (e) => {
             sessionStorage.vip = VIPField.checked;
             message.innerText = 'VIP Status Changed';
             // Update the colors available to the user
-            helper.sendGet('/getColors', (result) => {loadColors(result.colors);})
+            helper.sendGet('/getColors', (result) => { loadColors(result.colors); })
         }
     });
 
     return false;
 };
 
-// Functional stateless component for SignupWindow
+// Functional stateless component for ChangeVIPWindow
 const ChangeVIPWindow = (props) => {
     return (
         <div class='mainForm'>
-            <h3>Change&nbsp;VIP</h3>
+            <h3>Change&nbsp;VIP&nbsp;Status</h3>
             <form action='/changeVIP' onSubmit={handleVIPChange} method='POST'
                 name='changeVIPForm' id='changeVIPForm'>
                 <div>
                     <label for="vip-checkbox">VIP: </label>
-                    <input type="checkbox" name='vip-checkbox' id='vip-checkbox'/>
+                    <input type="checkbox" name='vip-checkbox' id='vip-checkbox' />
                 </div>
-                <input type="submit" value="Set VIP Status" />
+                <input type="submit" className='formSubmit' value="Set Status" />
                 <p id="vipMessage" class="statusMessage"></p>
             </form>
         </div>
     );
 };
 
+// Function attached to the 'set color' button
+// Sends a POST request to the server to update the user's color
 const handleColorChange = (e) => {
     e.preventDefault();
     const message = document.querySelector('#colorMessage');
@@ -117,9 +121,9 @@ const handleColorChange = (e) => {
     return false;
 };
 
-let loadColors;
-
 // Functional component for ChangeColorWindow
+// Dynamically updates based on the user's VIP status
+let loadColors;
 const ChangeColorWindow = (props) => {
     const [colors, setColors] = useState(props.colors);
 
@@ -127,13 +131,14 @@ const ChangeColorWindow = (props) => {
         helper.sendGet('/getColors', (result) => {
             setColors(result.colors);
         }
-    )}, []);
+        )
+    }, []);
 
-    loadColors = (loadedColors) => {setColors(loadedColors);}
+    loadColors = (loadedColors) => { setColors(loadedColors); }
 
     const colorList = colors.map((color) => {
-        return(
-                <option key={color} value={color}>{color}</option>
+        return (
+            <option key={color} value={color}>{color}</option>
         );
     });
 
@@ -148,13 +153,14 @@ const ChangeColorWindow = (props) => {
                         {colorList}
                     </select>
                 </div>
-                <input type="submit" value="Set Color" />
+                <input type="submit" className='formSubmit' value="Set Color" />
                 <p id="colorMessage" class="statusMessage"></p>
             </form>
         </div>
     );
 };
 
+// Set up connections and events
 const init = () => {
     const loginButton = document.querySelector('#loginButton');
     const signupButton = document.querySelector('#signupButton');
@@ -163,22 +169,20 @@ const init = () => {
     ReactDOM.render(<ChangePassWindow />, passDiv);
     document.querySelector('#content').appendChild(passDiv);
 
-    
     constvipDiv = document.createElement('div');
     ReactDOM.render(<ChangeVIPWindow />, constvipDiv);
     document.querySelector('#content').appendChild(constvipDiv);
+    // vip checkbox matches user's status
     helper.sendGet('/getVip', (result) => {
-        if(result.vip){
+        if (result.vip) {
             document.querySelector('#vip-checkbox').checked = true;
         }
         else { document.querySelector('#vip-checkbox').checked = false; }
     });
 
     const colorDiv = document.createElement('div');
-    ReactDOM.render(<ChangeColorWindow colors={[]}/>, colorDiv);
+    ReactDOM.render(<ChangeColorWindow colors={[]} />, colorDiv);
     document.querySelector('#content').appendChild(colorDiv);
-    
-
 };
 
 window.onload = init;

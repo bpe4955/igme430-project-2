@@ -19,22 +19,26 @@ const Error = (props) => {
     );
 }
 
+// When an error occurs, either create an Error component or update the existing component
 const handleError = (result) => {
     const errorDiv = document.querySelector("#error");
-    if(errorDiv.innerHTML === ""){
-        ReactDOM.render(<Error error={result.error}/>, errorDiv);
+    if (errorDiv.innerHTML === "") {
+        ReactDOM.render(<Error error={result.error} />, errorDiv);
     }
-    else{
+    else {
         updateError(result.error);
     }
     errorDiv.hidden = false;
 };
 
+// Hide the error message
 const clearError = () => {
     const errorDiv = document.querySelector("#error");
     errorDiv.hidden = true;
 };
 
+// Send a POST request to the server
+// Handles errors and can call a function after getting a response
 const sendPost = async (url, data, handler) => {
     clearError();
     const response = await fetch(url, {
@@ -60,6 +64,8 @@ const sendPost = async (url, data, handler) => {
     }
 };
 
+// Send a GET request to the server
+// Handles errors and can call a function after getting a response
 const sendGet = async (url, handler) => {
     clearError();
     const response = await fetch(url, {

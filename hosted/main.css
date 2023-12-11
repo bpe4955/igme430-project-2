@@ -11,7 +11,11 @@ body {
   text-align: center;
   margin: 0.5rem auto 0;
 }
-#top a, #top a:link, #top a:visited, #top a:hover, #top a:active {
+#top a,
+#top a:link,
+#top a:visited,
+#top a:hover,
+#top a:active {
   font-size: 1.25rem;
   display: block;
   padding: 3px;
@@ -205,7 +209,11 @@ nav {
   margin: 0 0.5rem;
   height: 100%;
 }
-.navlink a, .navlink a:link, .navlink a:visited, .navlink a:hover, .navlink a:active {
+.navlink a,
+.navlink a:link,
+.navlink a:visited,
+.navlink a:hover,
+.navlink a:active {
   line-height: 47px;
   padding: 3px;
   border: 0px solid #dcdcdc;
@@ -258,7 +266,10 @@ nav {
   color: #dcdcdc;
 }
 
-#user, #pass, #pass2, #oldpass {
+#user,
+#pass,
+#pass2,
+#oldpass {
   text-align: center;
   font-size: 1.1em;
   width: 180px;
@@ -269,7 +280,8 @@ input {
   text-align: center;
 }
 
-#changeVIPForm, #changeColorForm {
+#changeVIPForm,
+#changeColorForm {
   width: 175px;
   height: 100px;
 }
