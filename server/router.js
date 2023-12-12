@@ -25,6 +25,7 @@ const router = (app) => {
   app.post('/changeVIP', mid.requiresLogin, controllers.Account.changeVip);
 
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
+  app.get('*', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
 };
 
 module.exports = router;
