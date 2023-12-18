@@ -54,7 +54,7 @@ const getRoom = (room) => {
   const title = document.getElementById('title-message');
   const channelSelect = document.querySelector("#channelSelect");
   if (channelSelect.value !== "" && channelSelect.value) {
-    title.textContent = `NON-PICTORAL CHAT: ${channelSelect.value[0].toUpperCase() + channelSelect.value.substring(1)}`;
+    title.textContent = `NON-PICTORIAL CHAT: ${channelSelect.value[0].toUpperCase() + channelSelect.value.substring(1)}`;
   }
 }
 
@@ -95,7 +95,7 @@ const initChannelSelect = async () => {
   socket.emit('current room');
 
   channelSelect.addEventListener('change', () => {
-    messages.innerHTML = `<p id="title-message">NON-PICTORAL CHAT: ${channelSelect.value[0].toUpperCase() + channelSelect.value.substring(1)}</p>`;
+    messages.innerHTML = `<p id="title-message">NON-PICTORIAL CHAT: ${channelSelect.value[0].toUpperCase() + channelSelect.value.substring(1)}</p>`;
     socket.emit('room change', channelSelect.value);
     helper.sendPost('changeRoom', { room: channelSelect.value }, requestInitialMessages);
   });
